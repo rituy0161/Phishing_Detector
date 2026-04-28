@@ -1,0 +1,38 @@
+{
+  "feature_names": [
+    "url_length",
+    "dot_count",
+    "has_at",
+    "is_https",
+    "subdomain_count",
+    "is_ip_address",
+    "suspicious_tld",
+    "form_action_mismatch",
+    "has_password_field",
+    "external_script_count"
+  ],
+  "feature_mins": [
+    12.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "feature_maxs": [
+    25523.0,
+    11.0,
+    1.0,
+    1.0,
+    10.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ]
+}

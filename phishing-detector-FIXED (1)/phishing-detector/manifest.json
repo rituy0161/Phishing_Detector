@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "Phishing Attack Detection Master",
+  "version": "1.0.1",
+  "description": "Real-time phishing detection using local ML inference. Protects users by analyzing page content, URLs, and behavioral signals without transmitting browsing data.",
+  "author": "Capstone Cybersecurity Project",
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "notifications",
+    "alarms"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "background": {
+    "service_worker": "src/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16":  "icons/icon16.png",
+      "48":  "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Phishing Detection Master"
+  },
+
+  "options_page": "options.html",
+
+  "icons": {
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["model/*", "libs/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

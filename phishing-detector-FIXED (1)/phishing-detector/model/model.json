@@ -1,0 +1,55 @@
+{
+  "format": "layers-model",
+  "generatedBy": "Phishing Detection Master — placeholder",
+  "convertedBy": null,
+  "modelTopology": {
+    "class_name": "Sequential",
+    "config": {
+      "name": "PhishingDetector",
+      "layers": [
+        {
+          "class_name": "Dense",
+          "config": {
+            "name": "hidden1",
+            "units": 16,
+            "activation": "relu",
+            "use_bias": true,
+            "batch_input_shape": [null, 10]
+          }
+        },
+        {
+          "class_name": "Dense",
+          "config": {
+            "name": "hidden2",
+            "units": 8,
+            "activation": "relu",
+            "use_bias": true
+          }
+        },
+        {
+          "class_name": "Dense",
+          "config": {
+            "name": "output",
+            "units": 1,
+            "activation": "sigmoid",
+            "use_bias": true
+          }
+        }
+      ]
+    }
+  },
+  "weightsManifest": [
+    {
+      "paths": ["group1-shard1of1.bin"],
+      "weights": [
+        { "name": "hidden1/kernel", "shape": [10, 16], "dtype": "float32" },
+        { "name": "hidden1/bias",   "shape": [16],     "dtype": "float32" },
+        { "name": "hidden2/kernel", "shape": [16, 8],  "dtype": "float32" },
+        { "name": "hidden2/bias",   "shape": [8],      "dtype": "float32" },
+        { "name": "output/kernel",  "shape": [8, 1],   "dtype": "float32" },
+        { "name": "output/bias",    "shape": [1],      "dtype": "float32" }
+      ]
+    }
+  ],
+  "_note": "This is a placeholder. Run python/train_model.py to generate real weights and replace this file + group1-shard1of1.bin"
+}

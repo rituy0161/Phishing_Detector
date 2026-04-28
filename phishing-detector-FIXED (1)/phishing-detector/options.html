@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PADM — Command Centre</title>
+  <link rel="stylesheet" href="styles/options.css" />
+  <script src="libs/chart.min.js"></script>
+</head>
+<body>
+
+  <!-- Animated background -->
+  <div class="bg-grid"></div>
+  <div class="scanline"></div>
+
+  <!-- ── Sidebar ─────────────────────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-wrap">
+        <img src="icons/icon48.png" alt="Shield" class="logo" />
+        <div class="logo-ring"></div>
+      </div>
+      <h1 class="brand-title">PHISHING<span class="brand-accent">GUARD</span></h1>
+      <p class="brand-sub">◈ COMMAND CENTRE</p>
+      <div class="brand-status">
+        <span class="status-dot"></span>
+        <span class="status-text">NEURAL ENGINE ACTIVE</span>
+      </div>
+    </div>
+
+    <nav>
+      <div class="nav-group-label">ANALYSIS</div>
+      <button class="nav-btn active" data-panel="dashboard">
+        <span class="nav-icon">▦</span> Dashboard
+      </button>
+      <button class="nav-btn" data-panel="daily">
+        <span class="nav-icon">◈</span> Daily Report
+      </button>
+      <button class="nav-btn" data-panel="weekly">
+        <span class="nav-icon">◈</span> Weekly Report
+      </button>
+      <button class="nav-btn" data-panel="monthly">
+        <span class="nav-icon">◈</span> Monthly Report
+      </button>
+      <div class="nav-group-label">SYSTEM</div>
+      <button class="nav-btn" data-panel="settings">
+        <span class="nav-icon">⚙</span> Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sf-row">
+        <span class="sf-label">VERSION</span>
+        <span class="sf-val">1.0.1</span>
+      </div>
+      <div class="sf-row">
+        <span class="sf-label">ENGINE</span>
+        <span class="sf-val">LOCAL NN</span>
+      </div>
+      <div class="sf-row">
+        <span class="sf-label">DATA SENT</span>
+        <span class="sf-val safe-text">ZERO</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main content ────────────────────────────────────────────────────── -->
+  <main class="content">
+
+    <!-- ── Dashboard ──────────────────────────────────────────────────────── -->
+    <section class="panel active" id="panel-dashboard">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Detection Dashboard</h2>
+          <p class="panel-sub">Real-time threat intelligence overview</p>
+        </div>
+        <div class="panel-time" id="dashTime">--</div>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stats-row">
+        <div class="stat-card" id="statTotal">
+          <div class="stat-icon">⬡</div>
+          <span class="stat-num">—</span>
+          <span class="stat-label">Total Scanned</span>
+          <div class="stat-bar"><div class="stat-bar-fill" style="width:100%;background:var(--border2)"></div></div>
+        </div>
+        <div class="stat-card danger" id="statSuspicious">
+          <div class="stat-icon">⚠</div>
+          <span class="stat-num">—</span>
+          <span class="stat-label">Suspicious</span>
+          <div class="stat-bar"><div class="stat-bar-fill suspicious-fill"></div></div>
+        </div>
+        <div class="stat-card warn" id="statPhishing">
+          <div class="stat-icon">☢</div>
+          <span class="stat-num">—</span>
+          <span class="stat-label">High Risk</span>
+          <div class="stat-bar"><div class="stat-bar-fill high-fill"></div></div>
+        </div>
+        <div class="stat-card safe" id="statSafe">
+          <div class="stat-icon">✓</div>
+          <span class="stat-num">—</span>
+          <span class="stat-label">Safe Pages</span>
+          <div class="stat-bar"><div class="stat-bar-fill safe-fill"></div></div>
+        </div>
+      </div>
+
+      <!-- Charts row 1 -->
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title">▸ RISK DISTRIBUTION</span>
+            <span class="chart-tag">ALL TIME</span>
+          </div>
+          <canvas id="chartDistribution" height="200"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title">▸ THREAT TIMELINE</span>
+            <span class="chart-tag">30 DAYS</span>
+          </div>
+          <canvas id="chartTimeline" height="200"></canvas>
+        </div>
+      </div>
+
+      <!-- Charts row 2 -->
+      <div class="chart-card full-width">
+        <div class="chart-header">
+          <span class="chart-title">▸ TOP THREAT DOMAINS</span>
+          <span class="chart-tag">MOST FLAGGED</span>
+        </div>
+        <canvas id="chartDomains" height="130"></canvas>
+      </div>
+    </section>
+
+    <!-- ── Daily Report ───────────────────────────────────────────────────── -->
+    <section class="panel" id="panel-daily">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Daily Report</h2>
+          <p class="panel-sub">Per-day threat analysis log</p>
+        </div>
+      </div>
+      <div class="report-controls">
+        <div class="control-group">
+          <label class="control-label">SELECT DATE</label>
+          <input type="date" id="dailyDate" class="ctrl-input" />
+        </div>
+        <button class="btn-primary" id="loadDaily">
+          <span>▶</span> GENERATE
+        </button>
+        <div class="export-group">
+          <button class="btn-export" id="exportDailyCSV">⬇ CSV</button>
+          <button class="btn-export" id="exportDailyPDF">⬇ PDF</button>
+        </div>
+      </div>
+      <div class="report-output" id="dailyOutput">
+        <div class="empty-state">
+          <div class="empty-icon">◎</div>
+          <p>SELECT A DATE AND CLICK GENERATE</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Weekly Report ──────────────────────────────────────────────────── -->
+    <section class="panel" id="panel-weekly">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Weekly Report</h2>
+          <p class="panel-sub">7-day rolling threat summary</p>
+        </div>
+      </div>
+      <div class="report-controls">
+        <div class="control-group">
+          <label class="control-label">WEEK STARTING</label>
+          <input type="date" id="weeklyDate" class="ctrl-input" />
+        </div>
+        <button class="btn-primary" id="loadWeekly">
+          <span>▶</span> GENERATE
+        </button>
+        <div class="export-group">
+          <button class="btn-export" id="exportWeeklyCSV">⬇ CSV</button>
+          <button class="btn-export" id="exportWeeklyPDF">⬇ PDF</button>
+        </div>
+      </div>
+      <div class="report-output" id="weeklyOutput">
+        <div class="empty-state">
+          <div class="empty-icon">◎</div>
+          <p>SELECT A WEEK AND CLICK GENERATE</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Monthly Report ─────────────────────────────────────────────────── -->
+    <section class="panel" id="panel-monthly">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Monthly Report</h2>
+          <p class="panel-sub">Full month threat intelligence report</p>
+        </div>
+      </div>
+      <div class="report-controls">
+        <div class="control-group">
+          <label class="control-label">SELECT MONTH</label>
+          <input type="month" id="monthlyDate" class="ctrl-input" />
+        </div>
+        <button class="btn-primary" id="loadMonthly">
+          <span>▶</span> GENERATE
+        </button>
+        <div class="export-group">
+          <button class="btn-export" id="exportMonthlyCSV">⬇ CSV</button>
+          <button class="btn-export" id="exportMonthlyPDF">⬇ PDF</button>
+        </div>
+      </div>
+      <div class="report-output" id="monthlyOutput">
+        <div class="empty-state">
+          <div class="empty-icon">◎</div>
+          <p>SELECT A MONTH AND CLICK GENERATE</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Settings ───────────────────────────────────────────────────────── -->
+    <section class="panel" id="panel-settings">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">Settings & Privacy</h2>
+          <p class="panel-sub">Configure detection engine parameters</p>
+        </div>
+      </div>
+
+      <div class="settings-grid">
+
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <span class="settings-icon">⚡</span>
+            <h3>Detection Thresholds</h3>
+          </div>
+          <div class="threshold-row">
+            <div class="threshold-label">
+              <span>High Risk</span>
+              <span class="threshold-val danger-text" id="threshHighVal">75%</span>
+            </div>
+            <input type="range" id="threshHigh" min="50" max="95" value="75" class="slider slider-danger" />
+            <div class="threshold-track">
+              <span class="threshold-track-label">50%</span>
+              <span class="threshold-track-label">95%</span>
+            </div>
+          </div>
+          <div class="threshold-row">
+            <div class="threshold-label">
+              <span>Medium Risk</span>
+              <span class="threshold-val warn-text" id="threshMedVal">45%</span>
+            </div>
+            <input type="range" id="threshMed" min="20" max="70" value="45" class="slider slider-warn" />
+            <div class="threshold-track">
+              <span class="threshold-track-label">20%</span>
+              <span class="threshold-track-label">70%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <span class="settings-icon">🔔</span>
+            <h3>Notifications</h3>
+          </div>
+          <label class="toggle-row">
+            <div class="toggle-info">
+              <span class="toggle-title">Desktop Alerts</span>
+              <span class="toggle-desc">Notify when a high-risk page is detected</span>
+            </div>
+            <div class="toggle-wrap">
+              <input type="checkbox" id="notifEnabled" checked class="toggle-input" />
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <span class="settings-icon">🔒</span>
+            <h3>Data & Privacy</h3>
+          </div>
+          <p class="privacy-note">
+            All analysis runs <strong>100% locally</strong> in your browser. No URLs,
+            page content, or personal data is ever transmitted to external servers.
+            Logs are stored only in your browser's IndexedDB.
+          </p>
+          <div class="privacy-badges">
+            <span class="pbadge">◈ Zero Data Sent</span>
+            <span class="pbadge">◈ Local Inference</span>
+            <span class="pbadge">◈ No Tracking</span>
+          </div>
+          <button class="btn-danger" id="clearLogs">
+            🗑 DELETE ALL LOGS
+          </button>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <span class="settings-icon">⬡</span>
+            <h3>Neural Model Info</h3>
+          </div>
+          <div class="model-layers">
+            <div class="layer-row">
+              <span class="layer-tag">INPUT</span>
+              <span class="layer-line"></span>
+              <span class="layer-nodes">10 features</span>
+            </div>
+            <div class="layer-row">
+              <span class="layer-tag">DENSE</span>
+              <span class="layer-line"></span>
+              <span class="layer-nodes">32 → ReLU + BN</span>
+            </div>
+            <div class="layer-row">
+              <span class="layer-tag">DENSE</span>
+              <span class="layer-line"></span>
+              <span class="layer-nodes">16 → ReLU</span>
+            </div>
+            <div class="layer-row">
+              <span class="layer-tag">DENSE</span>
+              <span class="layer-line"></span>
+              <span class="layer-nodes">8 → ReLU</span>
+            </div>
+            <div class="layer-row">
+              <span class="layer-tag output-tag">OUTPUT</span>
+              <span class="layer-line"></span>
+              <span class="layer-nodes">1 → Sigmoid</span>
+            </div>
+          </div>
+          <p class="model-note" id="modelInfo">Pure JS inference · No cloud calls · 1,155 params</p>
+        </div>
+
+      </div>
+
+      <button class="btn-save" id="saveSettings">◈ SAVE SETTINGS</button>
+    </section>
+
+  </main>
+
+  <script src="src/options.js"></script>
+</body>
+</html>

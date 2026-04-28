@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Phishing Detection Master</title>
+  <link rel="stylesheet" href="styles/popup.css" />
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="scanline"></div>
+
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-wrap">
+        <img src="icons/icon48.png" alt="Shield" class="logo" />
+        <div class="logo-ring"></div>
+      </div>
+      <div class="title-block">
+        <h1 class="app-title">PHISHING<span class="title-accent">GUARD</span></h1>
+        <p class="app-sub">◈ NEURAL THREAT DETECTION ACTIVE</p>
+      </div>
+    </div>
+    <a href="options.html" id="settingsBtn" title="Reports" target="_blank" class="settings-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M4.93 4.93a10 10 0 0 1 14.14 14.14"/>
+      </svg>
+    </a>
+  </header>
+
+  <section class="scanner-section" id="riskSection">
+    <div class="scanner-wrap">
+      <div class="ring ring-outer"></div>
+      <div class="ring ring-mid"></div>
+      <div class="ring ring-inner"></div>
+
+      <svg viewBox="0 0 200 200" class="gauge-svg">
+        <g id="ticks"></g>
+        <circle cx="100" cy="100" r="72" fill="none" stroke="#030810" stroke-width="16"/>
+        <circle id="gaugeArc" cx="100" cy="100" r="72"
+          fill="none" stroke="#ff2d55" stroke-width="16"
+          stroke-dasharray="452" stroke-dashoffset="452"
+          stroke-linecap="round"
+          transform="rotate(-90 100 100)"
+          style="transition: stroke-dashoffset 1.2s cubic-bezier(0.34,1.56,0.64,1), stroke 0.6s ease;"/>
+        <text id="gaugeText" x="100" y="90" text-anchor="middle"
+              fill="#e8f4f8" font-size="36" font-weight="900"
+              font-family="'Consolas','Courier New',monospace"
+              style="transition: fill 0.6s ease;">--</text>
+        <text x="100" y="110" text-anchor="middle"
+              fill="#4a6980" font-size="9" font-weight="700"
+              font-family="'Segoe UI',sans-serif" letter-spacing="3">THREAT SCORE</text>
+      </svg>
+
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+    </div>
+
+    <div class="status-bar" id="statusBar">
+      <span class="status-dot" id="statusDot"></span>
+      <span class="risk-label" id="riskLabel">INITIALISING SCAN...</span>
+    </div>
+
+    <div class="quick-stats">
+      <div class="stat-pill">
+        <span class="stat-val" id="totalScanned">0</span>
+        <span class="stat-key">LINKS</span>
+      </div>
+      <div class="stat-divider">◆</div>
+      <div class="stat-pill">
+        <span class="stat-val" id="suspiciousCount">0</span>
+        <span class="stat-key">THREATS</span>
+      </div>
+      <div class="stat-divider">◆</div>
+      <div class="stat-pill">
+        <span class="stat-val" id="scanTime">--:--</span>
+        <span class="stat-key">SCAN TIME</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="indicators-section">
+    <div class="section-header">
+      <span class="section-label">▸ THREAT VECTORS</span>
+      <div class="header-line"></div>
+    </div>
+    <div class="indicator-grid" id="indicatorGrid"></div>
+  </section>
+
+  <section class="links-section">
+    <div class="section-header">
+      <span class="section-label">▸ FLAGGED URLS</span>
+      <span class="link-badge" id="linkBadge">0</span>
+      <div class="header-line"></div>
+    </div>
+    <div class="link-list" id="linkList">
+      <div class="empty-state">
+        <div class="empty-icon">◎</div>
+        <p>No threats detected on this page</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span class="footer-tag">PADM v1.0.1</span>
+    <span class="footer-mid">◈ LOCAL INFERENCE ◈ ZERO DATA SENT</span>
+    <a href="options.html" target="_blank" class="footer-link">LOGS →</a>
+  </footer>
+
+  <script src="src/popup.js"></script>
+</body>
+</html>
